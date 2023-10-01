@@ -161,7 +161,7 @@ int calculateCubicRoot(double p, double q, double d){
     }
     else if (d == 0) {
         yFirst = 3 * q / p;
-        y2 = (-1)*3*q/2*p;
+        y2 = (-1)*3*q/(2*p);
         y3 = y2;
         x1 = yFirst - (a/3);
         x2 = y2 - (a/3);
