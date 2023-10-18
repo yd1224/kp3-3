@@ -1,23 +1,27 @@
 #include <stdio.h>
 #include <math.h>
 #include <complex.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdbool.h>
 
 int calculateCubicRoot(double p, double q, double d);
 int complex calculateExpression(double u, double v);
 double x2, x3, y2, y3;
 double x1, yFirst, a;
 double complex xComplex2, xComplex3, yComplex2, yComplex3;
+double getInput(const char *prompt);
+bool isScientificNotation(const char *input);
 int main(void) {
     double b, c, p, q, d;
-
+    printf("The program finds all solutions including imaginary of cubic equations\n");
+    printf("\n");
     printf("x3 + ax2 + bx + c = 0\n");
     printf("\n");
-    printf("\tEnter a: ");
-    scanf("%lf", &a);
-    printf("\tEnter b: ");
-    scanf("%lf", &b);
-    printf("\tEnter c: ");
-    scanf("%lf", &c);
+    a = getInput("\tEnter a: ");
+    b = getInput("\tEnter b: ");
+    c = getInput("\tEnter c: ");
     printf("\n");
     if (a == 0 && b == 0 && c == 0){
         printf("x1 = x2 = x3 = 0\n");
@@ -96,6 +100,68 @@ int complex calculateExpression(double u, double v) {
 
     return 0;
 }
+
+double getInput(const char *prompt) {
+    char input[15];
+    double number;
+
+    do {
+        printf("%s", prompt);
+        scanf("%s", input);
+
+        int invalidInput = 0;
+        for (int i = 0; input[i] != '\0'; i++) {
+            if (isdigit(input[i]) == 0 && input[i] != '.' && input[i] != '-' && !isScientificNotation(input)) {
+                printf("\nYour input is invalid\n");
+                invalidInput = 1;
+                break;
+            }
+        }
+
+        if (!invalidInput) {
+            number = atof(input);
+            break;
+        }
+    } while (1);
+
+    return number;
+}
+bool isScientificNotation(const char *input) {
+    int len = strlen(input);
+    int eCount = 0;
+    int digitsBeforeE = 0;
+    int digitsAfterE = 0;
+
+    for (int i = 0; i < len; i++) {
+        char c = input[i];
+        if (c == 'e' || c == 'E') {
+            eCount++;
+        } else if (isdigit(c) && eCount == 0) {
+            digitsBeforeE++;
+        } else if (isdigit(c) && eCount == 1) {
+            digitsAfterE++;
+        }
+    }
+
+
+    return (eCount == 1) && (digitsBeforeE > 0) && (digitsAfterE > 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
